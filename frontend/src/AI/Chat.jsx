@@ -8,6 +8,10 @@ const WebSocketChat = () => {
     const [connectionStatus, setConnectionStatus] = useState('Disconnected');
     const socketRef = useRef(null);
 
+    var websocketURL = 'wss://async-aichat.up.railway.app/ws/chat/';
+    if (window.location.host === 'localhost:8000')
+        var websocketURL = 'ws://localhost:8000/ws/chat/';
+
     // apply markdown to response messages
     const createMarkup = (markdown) => {
         return { __html: marked(markdown) };
@@ -15,7 +19,7 @@ const WebSocketChat = () => {
 
     // Initialize WebSocket connection
     useEffect(() => {
-        const websocket = new WebSocket('ws://localhost:8000/ws/chat/');
+        const websocket = new WebSocket(websocketURL);
         socketRef.current = websocket;
 
         websocket.onopen = () => {
